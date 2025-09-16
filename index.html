@@ -1,24 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="/">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="This application is aimed at automating the tasks of a Rajasthan High Court advocate’s legal office (the application presently works for Principal Bench @ Jodhpur, coming soon for Jaipur bench!). While a lot of data related to the daily working of Hon’ble Rajasthan High Court at Jodhpur, is available on the net, the data is too disjoint and needs quite some effort before the complete info about a case can be brought at one place. This application aims to address this drawback, by bringing all the data elements (causelist, case data, case files etc) under one umbrella for swifter access and enabling a mobile office experience.">
+  <meta name="description" content="This application automates legal office tasks for Rajasthan High Court advocates.">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,43 +19,36 @@
   <title>haelo</title>
   <link rel="manifest" href="manifest.json">
 
+  <!-- 🔑 REQUIRED for Google Sign-In -->
+  <meta name="google-signin-client_id" content="999104674185-dr2r3h0jlm82ut600s0t5h7m3fr4kgg2.apps.googleusercontent.com" />
+
   <script>
-    // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = "965019264";
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyAqN21dVimYNu88mpdK2xcoY23s6qPai1g",
+      authDomain: "rajasthan-high-court.firebaseapp.com",
+      projectId: "rajasthan-high-court",
+      storageBucket: "rajasthan-high-court.firebasestorage.app",
+      messagingSenderId: "999104674185",
+      appId: "1:999104674185:web:d7b5d2e39d2d23c6b18958",
+      measurementId: "G-PVGJ89ZMFJ"
+    };
 
-     (function() {
-      const firebaseConfig = {
-        apiKey: "AIzaSyAqN21dVimYNu88mpdK2xcoY23s6qPai1g",
-        authDomain: "rajasthan-high-court.firebaseapp.com",
-        projectId: "rajasthan-high-court",
-        storageBucket: "rajasthan-high-court.firebasestorage.app",
-        messagingSenderId: "999104674185",
-        appId: "1:999104674185:web:d7b5d2e39d2d23c6b18958",
-        measurementId: "G-PVGJ89ZMFJ"
-      };
-
-      // Initialize Firebase
-      if (typeof firebase === "undefined") {
-        console.error("Firebase SDK not loaded!");
-      } else {
-        firebase.initializeApp(firebaseConfig);
-        if ('measurementId' in firebaseConfig) {
-          firebase.analytics();
-        }
-        console.log("Firebase Initialized.");
+    if (typeof firebase !== "undefined") {
+      firebase.initializeApp(firebaseConfig);
+      if ('measurementId' in firebaseConfig) {
+        firebase.analytics();
       }
-    })();
+    }
   </script>
-  <!-- This script adds the flutter initialization JS code -->
+
   <script src="flutter.js" defer></script>
 
-  <!-- Custom Loader CSS -->
   <style>
     body {
       margin: 0;
-      background-color: #ffffff; /* Change to match your theme */
+      background-color: #ffffff;
     }
-
     .loader-container {
       position: fixed;
       top: 0;
@@ -81,16 +61,14 @@
       justify-content: center;
       z-index: 9999;
     }
-
     .loader {
       border: 5px solid #f3f3f3;
-      border-top: 5px solid #535BFE; /* Your theme color */
+      border-top: 5px solid #535BFE;
       border-radius: 50%;
       width: 50px;
       height: 50px;
       animation: spin 1s linear infinite;
     }
-
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
@@ -98,42 +76,32 @@
   </style>
 
   <script>
-   if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('/firebase-messaging-sw.js');
-      });
-</script>
+    if ('serviceWorker' in navigator) {
+       window.addEventListener('load', function () {
+         navigator.serviceWorker.register('/firebase-messaging-sw.js');
+       });
+    }
+  </script>
 
 </head>
 <body>
-
-<!-- Custom Loader -->
 <div id="loader-container" class="loader-container">
   <div class="loader"></div>
 </div>
 
-
 <script>
-    window.addEventListener('load', function(ev) {
-      // Download main.dart.js and initialize Flutter
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        }
-      }).then(function(engineInitializer) {
-        return engineInitializer.initializeEngine();
-      }).then(function(appRunner) {
-        return appRunner.runApp();
-      }).then(function() {
-        // Hide loader when Flutter is fully loaded
-        var loader = document.getElementById("loader-container");
-        if (loader) {
-          loader.style.display = "none";
-        }
-      });
+  window.addEventListener('load', function(ev) {
+    _flutter.loader.loadEntrypoint({
+      serviceWorker: { serviceWorkerVersion: null }
+    }).then(function(engineInitializer) {
+      return engineInitializer.initializeEngine();
+    }).then(function(appRunner) {
+      return appRunner.runApp();
+    }).then(function() {
+      var loader = document.getElementById("loader-container");
+      if (loader) loader.style.display = "none";
     });
-  </script>
-
-</body>
+  });
+</script>
 </body>
 </html>
